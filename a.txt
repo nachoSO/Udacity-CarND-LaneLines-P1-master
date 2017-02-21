@@ -1,2 +1,3 @@
 activate carnd-term1
+cd Desktop\Udacity\CarND-LaneLines-P1-master
 jupyter notebook P1.ipynb

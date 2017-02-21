@@ -82,7 +82,6 @@ def draw_lines(img, lines, color=[255, 0, 0], thickness=10):
                 left_slopes.append(slope)
                 left_intercepts.append(y1-slope*x1)
     # 2) Average line position and extrapolation.
-    #460, 310
     m_left=np.mean(left_slopes)
     b_left=np.mean(left_intercepts)
     y1_left=img.shape[0]
@@ -154,6 +153,48 @@ def process_image(image):
     min_line_length = 25 #minimum number of pixels making up a line
     max_line_gap = 75    # maximum gap in pixels between connectable line segments
     line_image = np.copy(image) # creating a blank to draw lines on
+    # Run Hough on edge detected image
+    # Output "lines" is an array containing endpoints of detected line segments
+    lines = cv2.HoughLinesP(masked_edges, rho, theta, threshold, np.array([]),
+                                min_line_length, max_line_gap)
+
+    # Iterate over the output "lines" and draw lines on a blank image
+    for line in lines:
+        for x1,y1,x2,y2 in line:
+            cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
+
+    # Create a "color" binary image to combine with line image
+    #color_edges = np.dstack((edges, edges, edges)) 
+
+    # Draw the lines on the edge image
+    #lines_edges = cv2.addWeighted(color_edges, 0.8, line_image, 1, 0) 
+
+    return line_image
+    
+def process_image_pipeline(image):
+
+    gray = grayscale(image)
+
+    # Apply Gaussian smoothing
+    blur_gray = gaussian_blur(image, kernel_size = 15)
+
+    # Apply Canny in order to perform the edge detection
+    edges = canny(blur_gray, low_threshold = 50, high_threshold = 100)
+
+    #image size: 960x540
+    # This time we are defining a four sided polygon to mask
+    imshape = image.shape
+    vertices = np.array([[(0,imshape[0]),(460, 310), (460, 310), (imshape[1],imshape[0])]], dtype=np.int32) 
+    masked_edges=region_of_interest(edges, vertices)
+    
+	# Define the Hough transform parameters
+	# Make a blank the same size as our image to draw on
+    rho = 2 # distance resolution in pixels of the Hough grid
+    theta = np.pi/180 # angular resolution in radians of the Hough grid
+    threshold = 45     # minimum number of votes (intersections in Hough grid cell)
+    min_line_length = 25 #minimum number of pixels making up a line
+    max_line_gap = 75    # maximum gap in pixels between connectable line segments
+    line_image = np.copy(image) # creating a blank to draw lines on
     
     # Run Hough on edge detected image
     # Output "lines" is an array containing endpoints of detected line segments
@@ -167,5 +208,5 @@ def process_image(image):
     lines_edges = cv2.addWeighted(lines, 0.8, line_image, 1, 0) 
     plt.imshow(lines_edges)
 
-    # Save the image
     return lines_edges
+ 
