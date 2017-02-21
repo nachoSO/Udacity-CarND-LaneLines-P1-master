@@ -7,7 +7,6 @@ The goal of this project is make a pipeline that finds lane lines on the road
 
 [//]: # (Image References)
 
-[image1]: ./examples/grayscale.jpg "Grayscale"
 
 ---
 
@@ -28,9 +27,10 @@ My pipeline consisted of 5 steps.
  
 These are some of my results!
 
-![alt text]./image_output_pipeline/solidWhiteRight.jpg[image1]
-![alt text]./image_output_pipeline/solidYellowCurve2.jpg[image1]
-![alt text]./image_output_pipeline/whiteCarLaneSwitch.jpg[image1]
+[image1]: ./image_output_pipeline/solidWhiteRight.jpg
+[image2]: ./image_output_pipeline/solidYellowCurve2.jpg
+[image3]: ./image_output_pipeline/whiteCarLaneSwitch.jpg
+
 
 ###2. Identify potential shortcomings with your current pipeline
 
