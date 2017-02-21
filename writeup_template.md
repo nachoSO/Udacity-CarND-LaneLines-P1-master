@@ -27,7 +27,9 @@ My pipeline consisted of 5 steps.
 
 4) In this step I put in practice the hough transform, the values used in the function were defined based on: guess, previous practice and output. (Is there any way to understand which are the best fit-values?).
 In order to find and draw a single line on the left and right lanes, I modified the draw_lines() function using the following algorithm:
+
     4.1) In the first step I separated the lines into right and left lines based on the slope
+    
     4.2) Then the hough space coordinates, representing line segments, are averaged and the lines are extrapolated to the top and bottom of the lane. The top point choice is based on heuristic (image_size/2) which is based on the camera perspective.
     
 5) Finally the lines "detected" are overlaped in the original image
