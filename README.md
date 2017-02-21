@@ -4,6 +4,7 @@
 **Finding Lane Lines on the Road**
 
 The goal of this project is make a pipeline that finds lane lines on the road
+IMPORTANT: I provided three important files: P1.py and helper.py that represents the code used to cope with the project and the jupyter solution (P1.ipynb)
 
 [//]: # (Image References)
 [image1]: ./image_output_pipeline/solidWhiteRight.jpg
