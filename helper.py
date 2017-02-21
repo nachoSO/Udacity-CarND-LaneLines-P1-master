@@ -128,7 +128,7 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     return line_img
  
 # TODO: Build your pipeline that will draw lane lines on the test_images
-# then save them to the test_images directory.   based on guess and looking which was the output :p      
+# then save them to the test_images directory.         
 def process_image(image):
 
     gray = grayscale(image)
@@ -139,13 +139,12 @@ def process_image(image):
     # Apply Canny in order to perform the edge detection
     edges = canny(blur_gray, low_threshold = 50, high_threshold = 100)
 
-    #image size: 960x540
     # This time we are defining a four sided polygon to mask
     imshape = image.shape
     vertices = np.array([[(0,imshape[0]),(460, 310), (460, 310), (imshape[1],imshape[0])]], dtype=np.int32) 
     masked_edges=region_of_interest(edges, vertices)
     
-	# Define the Hough transform parameters
+	# Define the Hough transform parameters (based on guess and looking which was the output :p)
 	# Make a blank the same size as our image to draw on
     rho = 2 # distance resolution in pixels of the Hough grid
     theta = np.pi/180 # angular resolution in radians of the Hough grid
@@ -164,10 +163,10 @@ def process_image(image):
             cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
 
     # Create a "color" binary image to combine with line image
-    #color_edges = np.dstack((edges, edges, edges)) 
+    color_edges = np.dstack((edges, edges, edges)) 
 
     # Draw the lines on the edge image
-    #lines_edges = cv2.addWeighted(color_edges, 0.8, line_image, 1, 0) 
+    lines_edges = cv2.addWeighted(color_edges, 0.8, line_image, 1, 0) 
 
     return line_image
     
@@ -181,13 +180,12 @@ def process_image_pipeline(image):
     # Apply Canny in order to perform the edge detection
     edges = canny(blur_gray, low_threshold = 50, high_threshold = 100)
 
-    #image size: 960x540
     # This time we are defining a four sided polygon to mask
     imshape = image.shape
     vertices = np.array([[(0,imshape[0]),(460, 310), (460, 310), (imshape[1],imshape[0])]], dtype=np.int32) 
     masked_edges=region_of_interest(edges, vertices)
     
-	# Define the Hough transform parameters
+	# Define the Hough transform parameters (based on guess and looking which was the output :p)
 	# Make a blank the same size as our image to draw on
     rho = 2 # distance resolution in pixels of the Hough grid
     theta = np.pi/180 # angular resolution in radians of the Hough grid
@@ -200,7 +198,7 @@ def process_image_pipeline(image):
     # Output "lines" is an array containing endpoints of detected line segments
 	# Define the Hough transform parameters
     lines =  hough_lines(masked_edges, rho, theta, threshold, min_line_length, max_line_gap)
-
+   
     # Create a "color" binary image to combine with line image
     color_edges = np.dstack((edges, edges, edges)) 
 

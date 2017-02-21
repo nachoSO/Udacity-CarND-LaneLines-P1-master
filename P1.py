@@ -8,6 +8,7 @@ from IPython.display import HTML
 from collections import deque
 
 from helper import *
+testOnline=True # true=save the files in your computer
 
 def process_videos():
     #Function that performs the video lane Detection 
@@ -39,8 +40,9 @@ def process_images():
 
     for image_name in os.listdir(input_dir):
         image = mpimg.imread(input_dir+"/"+image_name)
-        image_line = process_image(image) 
-        cv2.imwrite(output_dir+image_name, cv2.cvtColor(image_line, cv2.COLOR_RGB2BGR))
+        image_line = process_image(image)
+        if testOnline==True:
+            cv2.imwrite(output_dir+image_name, cv2.cvtColor(image_line, cv2.COLOR_RGB2BGR))
         
 def process_images_pipeline():
     #Function that performs the image pipeline lane Detection
@@ -51,10 +53,11 @@ def process_images_pipeline():
     for image_name in os.listdir(input_dir):
         image = mpimg.imread(input_dir+"/"+image_name)
         image_line = process_image_pipeline(image) 
-        cv2.imwrite(output_dir+image_name, cv2.cvtColor(image_line, cv2.COLOR_RGB2BGR))
+        if testOnline==True:
+            cv2.imwrite(output_dir+image_name, cv2.cvtColor(image_line, cv2.COLOR_RGB2BGR))
+            plt.imshow(image_line)
 
 #Image + Video lane detection
-process_images() # lane detection
+#process_images() # lane detection
 process_images_pipeline() # image lane detection pipeline
-process_videos() # video lane detection pipeline
-    
+#process_videos() # video lane detection pipeline
